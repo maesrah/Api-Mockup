@@ -48,58 +48,73 @@ class _UserWidgetState extends State<UserWidget> {
           alignment: Alignment.bottomLeft,
           child: Padding(
             padding: const EdgeInsets.symmetric(
-                horizontal: kScreenPadding, vertical: kScreenPaddingLg),
+                horizontal: kSectionSpacingSm, vertical: kSectionSpacingSm),
             child: Container(
               decoration: BoxDecoration(
                 color: Colors.black.withOpacity(0.3),
-                borderRadius: BorderRadius.circular(16),
+                borderRadius: BorderRadius.circular(8),
               ),
-              child: Padding(
-                padding: const EdgeInsets.symmetric(
-                    horizontal: kSectionSpacingSm, vertical: kSectionSpacingLg),
-                child: Text(
-                  widget.userData.name,
-                  style: Theme.of(context)
-                      .textTheme
-                      .titleLarge
-                      ?.copyWith(color: Colors.white),
-                ),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  Padding(
+                    padding: const EdgeInsets.symmetric(
+                        horizontal: kSectionSpacingSm),
+                    child: Text(
+                      widget.userData.name,
+                      style: Theme.of(context)
+                          .textTheme
+                          .titleMedium
+                          ?.copyWith(color: Colors.white),
+                    ),
+                  ),
+                  const SizedBox(height: kSectionSpacingSm),
+                  Padding(
+                    padding: const EdgeInsets.symmetric(
+                        horizontal: kSectionSpacingSm),
+                    child: Text(
+                      widget.userData.location,
+                      style: Theme.of(context)
+                          .textTheme
+                          .titleSmall
+                          ?.copyWith(color: Colors.white),
+                    ),
+                  ),
+                ],
               ),
             ),
           ),
         ),
-        Align(
-          alignment: Alignment.bottomLeft,
-          child: Padding(
-            padding: const EdgeInsets.symmetric(
-                horizontal: kScreenPadding, vertical: kScreenPadding),
-            child: Container(
-              decoration: BoxDecoration(
-                color: Colors.black.withOpacity(0.3),
-                borderRadius: BorderRadius.circular(16),
-              ),
-              child: Padding(
-                padding: const EdgeInsets.symmetric(
-                    horizontal: kSectionSpacingSm, vertical: kSectionSpacingSm),
-                child: Text(
-                  widget.userData.lastSeen.toString(),
-                  style: Theme.of(context)
-                      .textTheme
-                      .titleSmall
-                      ?.copyWith(color: Colors.white),
-                ),
-              ),
-            ),
-          ),
-        ),
+        // Align(
+        //   alignment: Alignment.bottomLeft,
+        //   child: Padding(
+        //     padding: const EdgeInsets.symmetric(
+        //         horizontal: kScreenPadding, vertical: kScreenPadding),
+        //     child: Container(
+        //       decoration: BoxDecoration(
+        //         color: Colors.black.withOpacity(0.3),
+        //         borderRadius: BorderRadius.circular(16),
+        //       ),
+        //       child: Padding(
+        //         padding: const EdgeInsets.symmetric(
+        //             horizontal: kSectionSpacingSm, vertical: kSectionSpacingSm),
+        //         child: Text(
+        //           widget.userData.lastSeen.toString(),
+        //           style: Theme.of(context)
+        //               .textTheme
+        //               .titleSmall
+        //               ?.copyWith(color: Colors.white),
+        //         ),
+        //       ),
+        //     ),
+        //   ),
+        // ),
       ]),
 
       // child: Column(children: [
       //   Padding(
-      //     padding: const EdgeIn                                                                                                                                                                   \     ] \   q d    Q
-      // ]'    '
-
-      //    ' D    X    XQ    x sets.all(8.0),
+      //     padding: const EdgeIn sets.all(8.0),
       //     child: Text(widget.userData.name),
       //   ),
       //   Padding(

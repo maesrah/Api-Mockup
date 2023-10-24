@@ -1,5 +1,6 @@
 import 'package:apiproject/datahandler.dart';
 import 'package:apiproject/theme.dart';
+import 'package:apiproject/widget/item_list_view.dart';
 import 'package:apiproject/widget/lost_found_widget.dart';
 import 'package:apiproject/widget/post_page.dart';
 import 'package:apiproject/model/user.dart';
@@ -25,37 +26,36 @@ class _DashboardPageState extends State<DashboardPage> {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           const LostAndFoundLogoWidget(),
-          Expanded(
-            child: FutureBuilder<List<Users>>(
-              future: usersFuture,
-              builder: (context, snapshot) {
-                // showing a loader while waiting for the data
-                if (snapshot.connectionState == ConnectionState.waiting) {
-                  return const CircularProgressIndicator();
-                } else if (snapshot.hasData) {
-                  //we have the data, do stuff here
-                  final usersData = snapshot.data!;
-                  return Container(
-                    padding:
-                        EdgeInsets.symmetric(horizontal: kSectionSpacingSm),
-                    width: MediaQuery.of(context).size.width,
-                    height: MediaQuery.of(context).size.height,
-                    child: GridView.count(
-                        crossAxisCount: 2,
-                        crossAxisSpacing: kSectionSpacingSm,
-                        mainAxisSpacing: kSectionSpacingMd,
-                        childAspectRatio: 0.8,
-                        children: [
-                          for (final item in usersData)
-                            UserWidget(userData: item),
-                        ]),
-                  );
-                } else {
-                  return const Text("No data available");
-                }
-              },
+          DefaultTabController(
+            length: 3,
+            child: TabBar(
+              indicatorColor: Theme.of(context).primaryColor,
+              indicatorWeight: 2.0,
+              indicatorSize: TabBarIndicatorSize.label,
+              labelColor: Theme.of(context).secondaryHeaderColor,
+              tabs: [
+                Tab(
+                  child: Text(
+                    'CATS',
+                    style: Theme.of(context).textTheme.titleMedium,
+                  ),
+                ),
+                Tab(
+                  child: Text(
+                    'DOGS',
+                    style: Theme.of(context).textTheme.titleMedium,
+                  ),
+                ),
+                Tab(
+                  child: Text(
+                    'OTHERS',
+                    style: Theme.of(context).textTheme.titleMedium,
+                  ),
+                ),
+              ],
             ),
           ),
+          ItemListViewWidget(usersFuture: usersFuture),
         ],
       ),
       floatingActionButton: FloatingActionButton(
