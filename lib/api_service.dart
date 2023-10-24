@@ -5,28 +5,24 @@ import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 
 class ApiService {
-  Future<void> deleteData(BuildContext context, int id) async {
+  final String baseUrl =
+      'https://6531e4b14d4c2e3f333d5db9.mockapi.io/api/v1/posts';
+  Future<void> deleteData(int id) async {
     try {
-      final response = await http.delete(Uri.parse(
-          'https://6531e4b14d4c2e3f333d5db9.mockapi.io/api/v1/posts/$id'));
+      final response = await http.delete(Uri.parse('$baseUrl/$id'));
 
-      if (!context.mounted) return;
       if (response.statusCode == 200) {
-        ScaffoldMessenger.of(context)
-            .showSnackBar(const SnackBar(content: Text('Succesfully')));
       } else {
         throw Exception('Failed to delete data');
       }
     } catch (error) {
-      print(error);
+      rethrow;
     }
   }
 
-  Future<void> updateData(BuildContext context, int id) async {
+  Future<void> updateData(int id) async {
     try {
-      final response = await http.put(
-          Uri.parse(
-              'https://6531e4b14d4c2e3f333d5db9.mockapi.io/api/v1/posts/$id'),
+      final response = await http.put(Uri.parse('$baseUrl/$id'),
           headers: <String, String>{
             'Content-Type': 'application/json; charset=UTF-8',
           },
@@ -36,55 +32,42 @@ class ApiService {
             'userId': 1,
           }));
 
-      if (!context.mounted) return;
       if (response.statusCode == 200) {
-        ScaffoldMessenger.of(context)
-            .showSnackBar(const SnackBar(content: Text('Succesfully')));
-        print(response.body);
       } else {
         throw Exception('Failed to update data');
       }
     } catch (error) {
-      print(error);
+      rethrow;
     }
   }
 
-  Future<void> sendPostRequest(
-      BuildContext context, String name, String username) async {
-    var apiUrl =
-        Uri.parse("https://6531e4b14d4c2e3f333d5db9.mockapi.io/api/v1/posts");
-    var response = await http.post(
-      apiUrl,
-      headers: {"Content-Type": "application/json"},
-      body: jsonEncode(
-        {
-          "name": name,
-          "username": username,
-          "userId": 1,
-        },
-      ),
-    );
+  Future<void> sendPostRequest(String name, String username) async {
+    try {
+      var apiUrl = Uri.parse(baseUrl);
+      var response = await http.post(
+        apiUrl,
+        headers: {"Content-Type": "application/json"},
+        body: jsonEncode(
+          {
+            "name": name,
+            "username": username,
+            "userId": 1,
+          },
+        ),
+      );
 
-    //When a BuildContext is used, its mounted
-    //property must be checked after an asynchronous gap.
-    if (!context.mounted) return;
-    //201 indicate a succesful creation
-    if (response.statusCode == 201) {
-      ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
-        content: Text("Post created successfully!"),
-      ));
-      Navigator.of(context).pop();
-      print(response.body);
-    } else {
-      ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
-        content: Text("Failed to create post!"),
-      ));
+      // 201 indicates a successful creation
+      if (response.statusCode == 201) {
+      } else {
+        throw Exception("Failed to create post");
+      }
+    } catch (e) {
+      rethrow; // Rethrow the error for handling in the widget
     }
   }
 
   Future<List<Users>> getUsers() async {
-    var url =
-        Uri.parse("https://6531e4b14d4c2e3f333d5db9.mockapi.io/api/v1/posts");
+    var url = Uri.parse(baseUrl);
     // final response =
     //     await http.get(url, headers: {"Content-Type": "application/json"});
     final response = await http.get(url);

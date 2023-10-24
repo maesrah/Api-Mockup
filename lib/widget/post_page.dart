@@ -37,8 +37,17 @@ class PostPageState extends State<PostPage> {
             ElevatedButton(
               onPressed: () {
                 setState(() {
-                  apiService.sendPostRequest(
-                      context, nameController.text, userNameController.text);
+                  try {
+                    apiService.sendPostRequest(
+                        nameController.text, userNameController.text);
+                    ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+                      content: Text("Post created successfully!"),
+                    ));
+                  } catch (e) {
+                    ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+                      content: Text("Failed to create post!"),
+                    ));
+                  }
                 });
               },
               child: const Text("Create Post"),
