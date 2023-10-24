@@ -96,7 +96,10 @@ class _UserWidgetState extends State<UserWidget> {
 
       // child: Column(children: [
       //   Padding(
-      //     padding: const EdgeInsets.all(8.0),
+      //     padding: const EdgeIn                                                                                                                                                                   \     ] \   q d    Q
+      // ]'    '
+
+      //    ' D    X    XQ    x sets.all(8.0),
       //     child: Text(widget.userData.name),
       //   ),
       //   Padding(
