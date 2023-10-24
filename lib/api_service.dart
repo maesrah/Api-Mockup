@@ -4,7 +4,7 @@ import 'package:apiproject/model/user.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 
-class DataHandler {
+class ApiService {
   Future<void> deleteData(BuildContext context, int id) async {
     try {
       final response = await http.delete(Uri.parse(
@@ -82,7 +82,7 @@ class DataHandler {
     }
   }
 
-  static Future<List<Users>> getUsers() async {
+  Future<List<Users>> getUsers() async {
     var url =
         Uri.parse("https://6531e4b14d4c2e3f333d5db9.mockapi.io/api/v1/posts");
     // final response =

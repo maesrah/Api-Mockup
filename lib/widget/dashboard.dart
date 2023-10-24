@@ -1,11 +1,9 @@
-import 'package:apiproject/datahandler.dart';
-import 'package:apiproject/theme.dart';
+import 'package:apiproject/api_service.dart';
+
 import 'package:apiproject/widget/item_list_view.dart';
 import 'package:apiproject/widget/lost_found_widget.dart';
 import 'package:apiproject/widget/post_page.dart';
-import 'package:apiproject/model/user.dart';
-import 'package:apiproject/widget/user_widget.dart';
-import 'package:flutter/cupertino.dart';
+
 import 'package:flutter/material.dart';
 
 class DashboardPage extends StatefulWidget {
@@ -17,7 +15,7 @@ class DashboardPage extends StatefulWidget {
 
 class _DashboardPageState extends State<DashboardPage> {
   //DataHandler dataHandler = DataHandler();
-  final Future<List<Users>> usersFuture = DataHandler.getUsers();
+  ApiService apiService = ApiService();
 
   @override
   Widget build(BuildContext context) {
@@ -55,7 +53,7 @@ class _DashboardPageState extends State<DashboardPage> {
               ],
             ),
           ),
-          ItemListViewWidget(usersFuture: usersFuture),
+          ItemListViewWidget(usersFuture: apiService.getUsers()),
         ],
       ),
       floatingActionButton: FloatingActionButton(

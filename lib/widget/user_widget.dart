@@ -1,4 +1,4 @@
-import 'package:apiproject/datahandler.dart';
+import 'package:apiproject/api_service.dart';
 import 'package:apiproject/model/user.dart';
 import 'package:apiproject/theme.dart';
 import 'package:flutter/cupertino.dart';
@@ -13,7 +13,7 @@ class UserWidget extends StatefulWidget {
 }
 
 class _UserWidgetState extends State<UserWidget> {
-  DataHandler dataHandler = DataHandler();
+  ApiService dataHandler = ApiService();
 
   @override
   Widget build(BuildContext context) {

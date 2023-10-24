@@ -1,4 +1,4 @@
-import 'package:apiproject/datahandler.dart';
+import 'package:apiproject/api_service.dart';
 import 'package:flutter/material.dart';
 
 class PostPage extends StatefulWidget {
@@ -14,7 +14,7 @@ class PostPageState extends State<PostPage> {
 
   TextEditingController nameController = TextEditingController();
   TextEditingController userNameController = TextEditingController();
-  DataHandler dataHandler = DataHandler();
+  ApiService apiService = ApiService();
 
   @override
   Widget build(BuildContext context) {
@@ -37,7 +37,7 @@ class PostPageState extends State<PostPage> {
             ElevatedButton(
               onPressed: () {
                 setState(() {
-                  dataHandler.sendPostRequest(
+                  apiService.sendPostRequest(
                       context, nameController.text, userNameController.text);
                 });
               },
