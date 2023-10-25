@@ -1,9 +1,7 @@
 import 'package:apiproject/api_service.dart';
 import 'package:apiproject/model/post.dart';
-import 'package:apiproject/model/user.dart';
 import 'package:apiproject/screen/details_page.dart';
 import 'package:apiproject/theme.dart';
-
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
@@ -26,7 +24,7 @@ class _UserWidgetState extends State<UserWidget> {
             context,
             MaterialPageRoute(
                 builder: (context) => DetailsPage(
-                      postData: widget.postData,
+                      id: int.parse(widget.postData.id),
                     )));
       },
       child: Container(
@@ -101,41 +99,6 @@ class _UserWidgetState extends State<UserWidget> {
             ),
           ),
         ]),
-
-        // child: Column(children: [
-        //   Padding(
-        //     padding: const EdgeIn sets.all(8.0),
-        //     child: Text(widget.userData.name),
-        //   ),
-        //   Padding(
-        //     padding: const EdgeInsets.all(8.0),
-        //     child: Text(widget.userData.location),
-        //   ),
-        //   Padding(
-        //     padding: const EdgeInsets.all(8.0),
-        //     child: Text(widget.userData.lastSeen.toString()),
-        //   ),
-        //   Padding(
-        //     padding: const EdgeInsets.all(8.0),
-        //     child: Text(widget.userData.description),
-        //   ),
-        //   ElevatedButton(
-        //     onPressed: () {
-        //       setState(() {
-        //         dataHandler.deleteData(context, int.parse(widget.userData.id));
-        //       });
-        //     },
-        //     child: const Text('Delete Data'),
-        //   ),
-        //   ElevatedButton(
-        //     onPressed: () {
-        //       setState(() {
-        //         dataHandler.updateData(context, int.parse(widget.userData.id));
-        //       });
-        //     },
-        //     child: const Text('Update Data'),
-        //   ),
-        // ]),
       ),
     );
   }

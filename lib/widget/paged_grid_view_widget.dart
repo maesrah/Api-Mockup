@@ -1,9 +1,11 @@
 import 'package:apiproject/api_service.dart';
 import 'package:apiproject/model/post.dart';
-import 'package:apiproject/model/user.dart';
+import 'package:apiproject/screen/details_page.dart';
+
 import 'package:apiproject/theme.dart';
 import 'package:apiproject/widget/user_widget.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
 import 'package:infinite_scroll_pagination/infinite_scroll_pagination.dart';
 
 class PagedGridViewWidget extends StatefulWidget {
@@ -40,6 +42,7 @@ class _PagedGridViewWidgetState extends State<PagedGridViewWidget> {
 
   @override
   Widget build(BuildContext context) {
+    fetchNewPage();
     return Expanded(
         child: Padding(
       padding: const EdgeInsets.symmetric(

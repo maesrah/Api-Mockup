@@ -1,5 +1,7 @@
+import 'package:apiproject/api_service.dart';
 import 'package:apiproject/component/add_lost_button.dart';
 import 'package:apiproject/component/tab_widget.dart';
+import 'package:apiproject/widget/item_list_view.dart';
 
 import 'package:apiproject/widget/lost_found_widget.dart';
 
@@ -17,15 +19,14 @@ class DashboardPage extends StatefulWidget {
 }
 
 class _DashboardPageState extends State<DashboardPage> {
-  //DataHandler dataHandler = DataHandler();
-
+  ApiService apiService = ApiService();
   @override
   Widget build(BuildContext context) {
     return const Scaffold(
         body: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
           LostAndFoundLogoWidget(),
           CustomTabBarWidget(),
-          //ItemListViewWidget(usersFuture: apiService.getUsers())
+          // ItemListViewWidget(postFuture: apiService.getPosts()),
           PagedGridViewWidget(),
         ]),
         floatingActionButton: AddLostPetButton()

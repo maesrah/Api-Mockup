@@ -19,19 +19,18 @@ class ApiService {
     }
   }
 
-  Future<void> updatePost(int id) async {
+  Future<Post> updatePost(int id, String name) async {
     try {
-      final response = await http.put(Uri.parse('$_baseUrl/$id'),
+      final response = await http.put(Uri.parse('$_baseUrl/posts/$id'),
           headers: <String, String>{
             'Content-Type': 'application/json; charset=UTF-8',
           },
           body: json.encode(<String, dynamic>{
-            'name': 'hi',
-            'username': 'meow',
-            'userId': 1,
+            'name': name,
           }));
 
       if (response.statusCode == 200) {
+        return Post.fromJson(jsonDecode(response.body) as Map<String, dynamic>);
       } else {
         throw Exception('Failed to update data');
       }
@@ -62,5 +61,18 @@ class ApiService {
     final response = await http.get(url);
     final List body = json.decode(response.body);
     return body.map((e) => Post.fromJson(e)).toList();
+  }
+
+  Future<Post> getDetailsPost(int id) async {
+    var url = Uri.parse('$_baseUrl/posts/$id');
+    final response = await http.get(url);
+
+    if (response.statusCode == 200) {
+      final body = json.decode(response.body);
+
+      return Post.fromJson(body);
+    } else {
+      throw Exception('Failed to load post');
+    }
   }
 }
