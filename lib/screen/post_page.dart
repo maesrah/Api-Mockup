@@ -13,14 +13,17 @@ class PostPageState extends State<PostPage> {
   var apiUrl = Uri.parse("https://jsonplaceholder.typicode.com/users");
 
   TextEditingController nameController = TextEditingController();
-  TextEditingController userNameController = TextEditingController();
+  TextEditingController descriptionController = TextEditingController();
+  TextEditingController locationController = TextEditingController();
+  TextEditingController lastSeenController = TextEditingController();
+  TextEditingController imageController = TextEditingController();
   ApiService apiService = ApiService();
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text("Flutter Post Example"),
+        title: const Text("Find Your Lost Cats"),
       ),
       body: Padding(
         padding: const EdgeInsets.all(8.0),
@@ -31,19 +34,33 @@ class PostPageState extends State<PostPage> {
               decoration: const InputDecoration(hintText: "Name"),
             ),
             TextField(
-              controller: userNameController,
+              controller: descriptionController,
+              decoration: const InputDecoration(hintText: "Username"),
+            ),
+            TextField(
+              controller: locationController,
+              decoration: const InputDecoration(hintText: "Username"),
+            ),
+            TextField(
+              controller: lastSeenController,
+              decoration: const InputDecoration(hintText: "Username"),
+            ),
+            TextField(
+              controller: imageController,
               decoration: const InputDecoration(hintText: "Username"),
             ),
             ElevatedButton(
               onPressed: () {
-                setState(() {
+                setState(() async {
                   try {
-                    apiService.sendPostRequest(
-                        nameController.text, userNameController.text);
+                    await apiService.createPost(
+                        nameController.text, locationController.text);
+                    // ignore: use_build_context_synchronously
                     ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
                       content: Text("Post created successfully!"),
                     ));
                   } catch (e) {
+                    // ignore: use_build_context_synchronously
                     ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
                       content: Text("Failed to create post!"),
                     ));

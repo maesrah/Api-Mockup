@@ -1,15 +1,14 @@
 import 'dart:convert';
+import 'package:apiproject/model/post.dart';
 
-import 'package:apiproject/model/user.dart';
-import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 
 class ApiService {
-  final String baseUrl =
-      'https://6531e4b14d4c2e3f333d5db9.mockapi.io/api/v1/posts';
-  Future<void> deleteData(int id) async {
+  final String _baseUrl = 'https://6531e4b14d4c2e3f333d5db9.mockapi.io/api/v1';
+
+  Future<void> deletePost(int id) async {
     try {
-      final response = await http.delete(Uri.parse('$baseUrl/$id'));
+      final response = await http.delete(Uri.parse('$_baseUrl/posts/$id'));
 
       if (response.statusCode == 200) {
       } else {
@@ -20,9 +19,9 @@ class ApiService {
     }
   }
 
-  Future<void> updateData(int id) async {
+  Future<void> updatePost(int id) async {
     try {
-      final response = await http.put(Uri.parse('$baseUrl/$id'),
+      final response = await http.put(Uri.parse('$_baseUrl/$id'),
           headers: <String, String>{
             'Content-Type': 'application/json; charset=UTF-8',
           },
@@ -41,37 +40,27 @@ class ApiService {
     }
   }
 
-  Future<void> sendPostRequest(String name, String username) async {
-    try {
-      var apiUrl = Uri.parse(baseUrl);
-      var response = await http.post(
-        apiUrl,
-        headers: {"Content-Type": "application/json"},
-        body: jsonEncode(
-          {
-            "name": name,
-            "username": username,
-            "userId": 1,
-          },
-        ),
-      );
-
-      // 201 indicates a successful creation
-      if (response.statusCode == 201) {
-      } else {
-        throw Exception("Failed to create post");
-      }
-    } catch (e) {
-      rethrow; // Rethrow the error for handling in the widget
-    }
+  Future<void> createPost(String name, String username) async {
+    var apiUrl = Uri.parse('$_baseUrl/posts');
+    var response = await http.post(
+      apiUrl,
+      headers: {"Content-Type": "application/json"},
+      body: jsonEncode(
+        {
+          "name": name,
+          "username": username,
+          "userId": 1,
+        },
+      ),
+    );
   }
 
-  Future<List<Users>> getUsers() async {
-    var url = Uri.parse(baseUrl);
+  Future<List<Post>> getPosts() async {
+    var url = Uri.parse('$_baseUrl/posts');
     // final response =
     //     await http.get(url, headers: {"Content-Type": "application/json"});
     final response = await http.get(url);
     final List body = json.decode(response.body);
-    return body.map((e) => Users.fromJson(e)).toList();
+    return body.map((e) => Post.fromJson(e)).toList();
   }
 }

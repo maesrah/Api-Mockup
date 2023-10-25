@@ -1,5 +1,5 @@
 import 'package:apiproject/theme.dart';
-import 'package:apiproject/widget/dashboard.dart';
+import 'package:apiproject/screen/dashboard_page.dart';
 import 'package:flutter/material.dart';
 
 void main() {

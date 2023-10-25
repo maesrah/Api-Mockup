@@ -1,22 +1,23 @@
-import 'package:apiproject/model/user.dart';
+import 'package:apiproject/model/post.dart';
+
 import 'package:apiproject/theme.dart';
 import 'package:apiproject/widget/user_widget.dart';
-import 'package:flutter/cupertino.dart';
+
 import 'package:flutter/material.dart';
 
 class ItemListViewWidget extends StatelessWidget {
   const ItemListViewWidget({
     super.key,
-    required this.usersFuture,
+    required this.postFuture,
   });
 
-  final Future<List<Users>> usersFuture;
+  final Future<List<Post>> postFuture;
 
   @override
   Widget build(BuildContext context) {
     return Expanded(
-      child: FutureBuilder<List<Users>>(
-        future: usersFuture,
+      child: FutureBuilder<List<Post>>(
+        future: postFuture,
         builder: (context, snapshot) {
           // showing a loader while waiting for the data
           if (snapshot.connectionState == ConnectionState.waiting) {
@@ -35,7 +36,7 @@ class ItemListViewWidget extends StatelessWidget {
                   mainAxisSpacing: kSectionSpacingMd,
                   childAspectRatio: 0.8,
                   children: [
-                    for (final item in usersData) UserWidget(userData: item),
+                    for (final item in usersData) UserWidget(postData: item),
                   ]),
             );
           } else {

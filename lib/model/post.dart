@@ -1,20 +1,20 @@
 class Post {
-  String? id;
-  String? name;
-  int? lastSeen;
-  String? description;
-  String? location;
-  String? imageUrl;
-  bool? isFound;
+  late String id;
+  late String name;
+  late int lastSeen;
+  late String description;
+  late String location;
+  late String imageUrl;
+  late bool isFound;
 
   Post(
-      {this.id,
-      this.name,
-      this.lastSeen,
-      this.description,
-      this.location,
-      this.imageUrl,
-      this.isFound});
+      {required this.id,
+      required this.name,
+      required this.lastSeen,
+      required this.description,
+      required this.location,
+      required this.imageUrl,
+      required this.isFound});
 
   Post.fromJson(Map<String, dynamic> json) {
     id = json['id'];
