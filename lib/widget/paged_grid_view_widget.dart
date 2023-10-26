@@ -1,10 +1,10 @@
 import 'package:apiproject/api_service.dart';
+import 'package:apiproject/component/add_lost_button.dart';
 import 'package:apiproject/model/post.dart';
-import 'package:apiproject/screen/details_page.dart';
 
 import 'package:apiproject/theme.dart';
 import 'package:apiproject/widget/user_widget.dart';
-import 'package:flutter/cupertino.dart';
+
 import 'package:flutter/material.dart';
 import 'package:infinite_scroll_pagination/infinite_scroll_pagination.dart';
 
@@ -40,28 +40,40 @@ class _PagedGridViewWidgetState extends State<PagedGridViewWidget> {
     }
   }
 
+  void refreshGridView() {
+    // Fetch updated data or any other necessary operations
+    setState(() {
+      _pagingController.refresh();
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
-    fetchNewPage();
     return Expanded(
         child: Padding(
       padding: const EdgeInsets.symmetric(
           horizontal: kSectionSpacingSm, vertical: kSectionSpacingSm),
-      child: PagedGridView<int, Post>(
-        showNewPageProgressIndicatorAsGridChild: false,
-        showNewPageErrorIndicatorAsGridChild: false,
-        showNoMoreItemsIndicatorAsGridChild: false,
-        pagingController: _pagingController,
-        gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-          crossAxisCount: 2,
-          crossAxisSpacing: kSectionSpacingSm,
-          mainAxisSpacing: kSectionSpacingMd,
-          childAspectRatio: 0.8,
+      child: RefreshIndicator(
+        onRefresh: () => Future.sync(() => _pagingController.refresh()),
+        child: PagedGridView<int, Post>(
+          showNewPageProgressIndicatorAsGridChild: false,
+          showNewPageErrorIndicatorAsGridChild: false,
+          showNoMoreItemsIndicatorAsGridChild: false,
+          pagingController: _pagingController,
+          gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+            crossAxisCount: 2,
+            crossAxisSpacing: kSectionSpacingSm,
+            mainAxisSpacing: kSectionSpacingMd,
+            childAspectRatio: 0.8,
+          ),
+          builderDelegate: PagedChildBuilderDelegate<Post>(
+              itemBuilder: (context, item, index) {
+            return UserWidget(
+              postData: item,
+              refreshCallback: refreshGridView,
+            );
+          }),
         ),
-        builderDelegate: PagedChildBuilderDelegate<Post>(
-            itemBuilder: (context, item, index) {
-          return UserWidget(postData: item);
-        }),
       ),
     ));
   }

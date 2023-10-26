@@ -1,4 +1,5 @@
 import 'package:apiproject/api_service.dart';
+import 'package:apiproject/model/post.dart';
 import 'package:flutter/material.dart';
 
 class PostPage extends StatefulWidget {
@@ -18,7 +19,7 @@ class PostPageState extends State<PostPage> {
   TextEditingController lastSeenController = TextEditingController();
   TextEditingController imageController = TextEditingController();
   ApiService apiService = ApiService();
-
+  int _idCounter = 1;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -35,30 +36,38 @@ class PostPageState extends State<PostPage> {
             ),
             TextField(
               controller: descriptionController,
-              decoration: const InputDecoration(hintText: "Username"),
+              decoration: const InputDecoration(hintText: "Description"),
             ),
             TextField(
               controller: locationController,
-              decoration: const InputDecoration(hintText: "Username"),
+              decoration: const InputDecoration(hintText: "Location"),
             ),
             TextField(
               controller: lastSeenController,
-              decoration: const InputDecoration(hintText: "Username"),
+              decoration: const InputDecoration(hintText: "lastSeen"),
             ),
             TextField(
               controller: imageController,
-              decoration: const InputDecoration(hintText: "Username"),
+              decoration: const InputDecoration(hintText: "Image"),
             ),
             ElevatedButton(
               onPressed: () {
                 setState(() async {
                   try {
-                    await apiService.createPost(
-                        nameController.text, locationController.text);
+                    await apiService.createPost(Post(
+                        id: _idCounter.toString(),
+                        name: nameController.text,
+                        lastSeen: int.parse(lastSeenController.text),
+                        description: descriptionController.text,
+                        location: locationController.text,
+                        imageUrl: imageController.text,
+                        isFound: false));
                     // ignore: use_build_context_synchronously
                     ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
                       content: Text("Post created successfully!"),
                     ));
+                    // ignore: use_build_context_synchronously
+                    Navigator.pop(context);
                   } catch (e) {
                     // ignore: use_build_context_synchronously
                     ScaffoldMessenger.of(context).showSnackBar(const SnackBar(

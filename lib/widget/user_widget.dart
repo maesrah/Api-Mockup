@@ -1,13 +1,17 @@
 import 'package:apiproject/api_service.dart';
 import 'package:apiproject/model/post.dart';
-import 'package:apiproject/screen/details_page.dart';
+// import 'package:apiproject/screen/details_page.dart';
+import 'package:apiproject/screen/details_sec_page.dart';
 import 'package:apiproject/theme.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 class UserWidget extends StatefulWidget {
   final Post postData;
-  const UserWidget({super.key, required this.postData});
+  final Function refreshCallback;
+
+  const UserWidget(
+      {super.key, required this.postData, required this.refreshCallback});
 
   @override
   State<UserWidget> createState() => _UserWidgetState();
@@ -23,8 +27,9 @@ class _UserWidgetState extends State<UserWidget> {
         Navigator.push(
             context,
             MaterialPageRoute(
-                builder: (context) => DetailsPage(
+                builder: (context) => DetailsSecondPage(
                       id: int.parse(widget.postData.id),
+                      refreshCallback: widget.refreshCallback,
                     )));
       },
       child: Container(

@@ -19,14 +19,14 @@ class ApiService {
     }
   }
 
-  Future<Post> updatePost(int id, String name) async {
+  Future<Post> updatePost(int id, bool isFound) async {
     try {
       final response = await http.put(Uri.parse('$_baseUrl/posts/$id'),
           headers: <String, String>{
             'Content-Type': 'application/json; charset=UTF-8',
           },
           body: json.encode(<String, dynamic>{
-            'name': name,
+            'isFound': isFound,
           }));
 
       if (response.statusCode == 200) {
@@ -39,16 +39,18 @@ class ApiService {
     }
   }
 
-  Future<void> createPost(String name, String username) async {
+  Future<void> createPost(Post post) async {
     var apiUrl = Uri.parse('$_baseUrl/posts');
     var response = await http.post(
       apiUrl,
       headers: {"Content-Type": "application/json"},
       body: jsonEncode(
         {
-          "name": name,
-          "username": username,
-          "userId": 1,
+          "name": post.name,
+          "description": post.description,
+          "location": post.location,
+          "lastSeen": post.lastSeen,
+          "isFound": false,
         },
       ),
     );
