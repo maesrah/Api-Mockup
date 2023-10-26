@@ -25,4 +25,11 @@ class Post {
     lastSeen = json['lastSeen'];
     isFound = json['isFound'];
   }
+  Map<String, dynamic> toJson() => {
+        "name": name,
+        "description": description,
+        "location": location,
+        "lastSeen": lastSeen,
+        "isFound": false,
+      };
 }

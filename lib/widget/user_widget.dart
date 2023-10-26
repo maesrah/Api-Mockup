@@ -1,5 +1,6 @@
 import 'package:apiproject/api_service.dart';
 import 'package:apiproject/model/post.dart';
+import 'package:apiproject/screen/details_page.dart';
 // import 'package:apiproject/screen/details_page.dart';
 import 'package:apiproject/screen/details_sec_page.dart';
 import 'package:apiproject/theme.dart';
@@ -27,7 +28,7 @@ class _UserWidgetState extends State<UserWidget> {
         Navigator.push(
             context,
             MaterialPageRoute(
-                builder: (context) => DetailsSecondPage(
+                builder: (context) => DetailsPage(
                       id: int.parse(widget.postData.id),
                       refreshCallback: widget.refreshCallback,
                     )));

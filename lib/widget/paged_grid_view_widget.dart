@@ -1,10 +1,7 @@
 import 'package:apiproject/api_service.dart';
-import 'package:apiproject/component/add_lost_button.dart';
 import 'package:apiproject/model/post.dart';
-
 import 'package:apiproject/theme.dart';
 import 'package:apiproject/widget/user_widget.dart';
-
 import 'package:flutter/material.dart';
 import 'package:infinite_scroll_pagination/infinite_scroll_pagination.dart';
 

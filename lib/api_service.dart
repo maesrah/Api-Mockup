@@ -23,7 +23,7 @@ class ApiService {
     try {
       final response = await http.put(Uri.parse('$_baseUrl/posts/$id'),
           headers: <String, String>{
-            'Content-Type': 'application/json; charset=UTF-8',
+            'Content-Type': 'application/json',
           },
           body: json.encode(<String, dynamic>{
             'isFound': isFound,
@@ -40,18 +40,13 @@ class ApiService {
   }
 
   Future<void> createPost(Post post) async {
+    //post.toJson();
     var apiUrl = Uri.parse('$_baseUrl/posts');
     var response = await http.post(
       apiUrl,
       headers: {"Content-Type": "application/json"},
       body: jsonEncode(
-        {
-          "name": post.name,
-          "description": post.description,
-          "location": post.location,
-          "lastSeen": post.lastSeen,
-          "isFound": false,
-        },
+        post.toJson(),
       ),
     );
   }

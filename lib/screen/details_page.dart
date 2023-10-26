@@ -16,9 +16,15 @@ class DetailsPage extends StatefulWidget {
 
 class _DetailsPageState extends State<DetailsPage> {
   final ApiService apiService = ApiService();
-
   final TextEditingController nameController = TextEditingController();
-  bool isSelected = false;
+  late Future<Post> futurePost;
+  // bool isSelected = false;
+
+  void initState() {
+    super.initState();
+    futurePost = apiService.getDetailsPost(widget.id);
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -26,7 +32,7 @@ class _DetailsPageState extends State<DetailsPage> {
         title: const Text('Details Pet'),
       ),
       body: FutureBuilder<Post>(
-        future: apiService.getDetailsPost(widget.id),
+        future: futurePost,
         builder: (context, snapshot) {
           if (snapshot.connectionState == ConnectionState.waiting) {
             return const Center(child: CircularProgressIndicator());
@@ -75,11 +81,11 @@ class _DetailsPageState extends State<DetailsPage> {
                 Text(detailsPost.location),
                 InputChip(
                   label: Text(
-                    isSelected ? 'Found' : 'Lost',
+                    detailsPost.isFound ? 'Found' : 'Lost',
                     style: const TextStyle(color: Colors.black),
                   ),
                   avatar: Icon(
-                    isSelected
+                    detailsPost.isFound
                         ? CupertinoIcons.check_mark_circled_solid
                         : CupertinoIcons.clear_circled_solid,
                     color: Colors.black, // Set your desired icon color
@@ -87,15 +93,16 @@ class _DetailsPageState extends State<DetailsPage> {
                   onSelected: (bool newBool) {
                     setState(() {
                       try {
-                        isSelected = !isSelected;
-                        detailsPost.isFound = newBool;
+                        //isSelected = !isSelected;
+                        //detailsPost.isFound = newBool;
+                        detailsPost.isFound = !detailsPost.isFound;
                         print(detailsPost.isFound);
                       } catch (e) {
                         rethrow;
                       }
                     });
                   },
-                  selected: isSelected,
+                  selected: detailsPost.isFound,
                   selectedColor: Colors.greenAccent,
                   //disabledColor: Theme.of(context).primaryColor,
                 ),
@@ -127,7 +134,6 @@ class _DetailsPageState extends State<DetailsPage> {
                     onPressed: () {
                       setState(() async {
                         try {
-                          detailsPost.isFound = isSelected;
                           await apiService.deletePost(widget.id);
                           // ignore: use_build_context_synchronously
                           ScaffoldMessenger.of(context)
