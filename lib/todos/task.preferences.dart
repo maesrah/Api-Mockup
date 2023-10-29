@@ -25,9 +25,9 @@ class _TaskPreferenceState extends State<TaskPreference> {
     final prefs = await SharedPreferences.getInstance();
     final taskListJson = prefs.getString('tasks');
     if (taskListJson != null) {
-      final decodedList = jsonDecode(taskListJson);
+      final taskList = jsonDecode(taskListJson);
       final tasks =
-          List<Task>.from(decodedList.map((taskMap) => Task.fromJson(taskMap)));
+          List<Task>.from(taskList.map((taskMap) => Task.fromJson(taskMap)));
       setState(() {
         _tasks = tasks;
       });
