@@ -1,7 +1,6 @@
 import 'package:apiproject/todos/todo.controller.dart';
 import 'package:flutter/material.dart';
 
-import 'package:apiproject/screen/dashboard_page.dart';
 import 'package:apiproject/theme.dart';
 
 void main() {

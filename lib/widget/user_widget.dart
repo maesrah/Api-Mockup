@@ -2,7 +2,7 @@ import 'package:apiproject/api_service.dart';
 import 'package:apiproject/model/post.dart';
 import 'package:apiproject/screen/details_page.dart';
 // import 'package:apiproject/screen/details_page.dart';
-import 'package:apiproject/screen/details_sec_page.dart';
+// import 'package:apiproject/screen/details_sec_page.dart';
 import 'package:apiproject/theme.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';

@@ -1,8 +1,8 @@
 import 'package:apiproject/api_service.dart';
-import 'package:apiproject/component/add_lost_button.dart';
+import 'package:apiproject/component/add_lost.button.dart';
 import 'package:apiproject/component/tab_widget.dart';
 import 'package:apiproject/widget/lost_found_widget.dart';
-import 'package:apiproject/widget/paged_grid_view_widget.dart';
+import 'package:apiproject/widget/paged_grid_view.widget.dart';
 import 'package:flutter/material.dart';
 
 class DashboardPage extends StatefulWidget {
