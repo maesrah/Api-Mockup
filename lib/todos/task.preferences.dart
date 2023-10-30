@@ -4,6 +4,8 @@ import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'dart:convert';
 
+const _taskKey = 'tasks';
+
 class TaskPreference extends StatefulWidget {
   const TaskPreference({Key? key}) : super(key: key);
 
@@ -12,59 +14,31 @@ class TaskPreference extends StatefulWidget {
 }
 
 class TaskPreferenceState extends State<TaskPreference> {
-  List<Task> _tasks = [];
+  Iterable<Task> _tasks = List.unmodifiable([]);
   final _taskNameController = TextEditingController();
 
   @override
   void initState() {
     super.initState();
-    _loadTask();
-    //readFromSp();
-  }
-
-  _loadTask() async {
-    final prefs = await SharedPreferences.getInstance();
-    final taskListJson = prefs.getString('tasks');
-    if (taskListJson != null) {
-      final taskList = jsonDecode(taskListJson);
-      final tasks =
-          List<Task>.from(taskList.map((taskMap) => Task.fromJson(taskMap)));
-      setState(() {
-        _tasks = tasks;
-      });
-    }
-  }
-
-  //store the task list as a single string,
-  _saveTask() async {
-    final prefs = await SharedPreferences.getInstance();
-
-    //setting the object to string type
-    //a single JSON string that represents the entire list of tasks
-    final taskListJson =
-        jsonEncode(_tasks.map((task) => task.toJson()).toList());
-
-    prefs.setString('tasks', taskListJson);
-
-    setState(() {});
+    _loadTasks();
   }
 
 //store each task as an individual string within a list
-  saveIntoSp() async {
+  Future<void> _saveTasks() async {
     final prefs = await SharedPreferences.getInstance();
 
     //individual JSON strings for each task
     List<String> taskListString =
         _tasks.map((task) => jsonEncode(task.toJson())).toList();
 
-    prefs.setStringList('myData', taskListString);
+    prefs.setStringList(_taskKey, taskListString);
 
     setState(() {});
   }
 
-  readFromSp() async {
+  Future<void> _loadTasks() async {
     final prefs = await SharedPreferences.getInstance();
-    List<String>? taskListString = prefs.getStringList('myData');
+    List<String>? taskListString = prefs.getStringList(_taskKey);
     if (taskListString != null) {
       _tasks = taskListString
           .map((task) => Task.fromJson(json.decode(task)))
@@ -83,24 +57,36 @@ class TaskPreferenceState extends State<TaskPreference> {
       ..._tasks,
     ];
     _tasks = newTaskList;
-    _saveTask();
-    saveIntoSp();
+    _saveTasks();
   }
 
   void deleteTask(String taskName) {
-    _tasks.removeWhere((item) => item.name == taskName);
-    _saveTask();
-    saveIntoSp();
+    // _tasks.removeWhere((item) => item.name == taskName);
+
+    // final updatedTasks = [
+    //   ..._tasks,
+    // ];
+
+    // _tasks = updatedTasks;
+
+    _tasks = _tasks.where((item) => item.name != taskName);
+
+    _saveTasks();
   }
 
   void updateTask(String taskName) {
-    for (final task in _tasks) {
-      if (task.name == taskName) {
-        task.isDone = !task.isDone;
+    _tasks = _tasks.map((item) {
+      if (item.name == taskName) {
+        return Task(
+          name: item.name,
+          isDone: !item.isDone,
+        );
       }
-    }
-    _saveTask();
-    saveIntoSp();
+
+      return item;
+    }).toList();
+
+    _saveTasks();
   }
 
   @override
@@ -112,7 +98,7 @@ class TaskPreferenceState extends State<TaskPreference> {
   @override
   Widget build(BuildContext context) {
     return TodoAppPage(
-      tasks: _tasks,
+      tasks: _tasks.toList(),
       taskNameController: _taskNameController,
       deleteTask: deleteTask,
       updateTask: updateTask,
