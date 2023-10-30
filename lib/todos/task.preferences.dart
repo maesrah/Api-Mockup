@@ -45,7 +45,7 @@ class TaskPreferenceState extends State<TaskPreference> {
         jsonEncode(_tasks.map((task) => task.toJson()).toList());
 
     prefs.setString('tasks', taskListJson);
-    print('tasklistjson:$taskListJson');
+
     setState(() {});
   }
 
@@ -58,7 +58,7 @@ class TaskPreferenceState extends State<TaskPreference> {
         _tasks.map((task) => jsonEncode(task.toJson())).toList();
 
     prefs.setStringList('myData', taskListString);
-    print('taskliststring:$taskListString');
+
     setState(() {});
   }
 
