@@ -19,9 +19,10 @@ class TaskPreferenceState extends State<TaskPreference> {
   void initState() {
     super.initState();
     _loadTask();
+    //readFromSp();
   }
 
-  Future<void> _loadTask() async {
+  _loadTask() async {
     final prefs = await SharedPreferences.getInstance();
     final taskListJson = prefs.getString('tasks');
     if (taskListJson != null) {
@@ -34,13 +35,43 @@ class TaskPreferenceState extends State<TaskPreference> {
     }
   }
 
-  Future<void> _saveTask() async {
+  //store the task list as a single string,
+  _saveTask() async {
     final prefs = await SharedPreferences.getInstance();
+
+    //setting the object to string type
+    //a single JSON string that represents the entire list of tasks
     final taskListJson =
         jsonEncode(_tasks.map((task) => task.toJson()).toList());
+
     prefs.setString('tasks', taskListJson);
-    print(taskListJson);
+    print('tasklistjson:$taskListJson');
     setState(() {});
+  }
+
+//store each task as an individual string within a list
+  saveIntoSp() async {
+    final prefs = await SharedPreferences.getInstance();
+
+    //individual JSON strings for each task
+    List<String> taskListString =
+        _tasks.map((task) => jsonEncode(task.toJson())).toList();
+
+    prefs.setStringList('myData', taskListString);
+    print('taskliststring:$taskListString');
+    setState(() {});
+  }
+
+  readFromSp() async {
+    final prefs = await SharedPreferences.getInstance();
+    List<String>? taskListString = prefs.getStringList('myData');
+    if (taskListString != null) {
+      _tasks = taskListString
+          .map((task) => Task.fromJson(json.decode(task)))
+          .toList();
+    }
+    setState(() {});
+    //
   }
 
   void createTask(String name) {
@@ -53,11 +84,13 @@ class TaskPreferenceState extends State<TaskPreference> {
     ];
     _tasks = newTaskList;
     _saveTask();
+    saveIntoSp();
   }
 
   void deleteTask(String taskName) {
     _tasks.removeWhere((item) => item.name == taskName);
     _saveTask();
+    saveIntoSp();
   }
 
   void updateTask(String taskName) {
@@ -67,6 +100,7 @@ class TaskPreferenceState extends State<TaskPreference> {
       }
     }
     _saveTask();
+    saveIntoSp();
   }
 
   @override
