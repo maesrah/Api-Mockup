@@ -12,10 +12,10 @@ class DetailsSecondPage extends StatefulWidget {
       : super(key: key);
 
   @override
-  _DetailsSecondPageState createState() => _DetailsSecondPageState();
+  DetailsSecondPageState createState() => DetailsSecondPageState();
 }
 
-class _DetailsSecondPageState extends State<DetailsSecondPage> {
+class DetailsSecondPageState extends State<DetailsSecondPage> {
   final ApiService apiService = ApiService();
   //final TextEditingController nameController = TextEditingController();
   Post? detailsPost;

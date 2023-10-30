@@ -20,6 +20,7 @@ class _DetailsPageState extends State<DetailsPage> {
   late Future<Post> futurePost;
   // bool isSelected = false;
 
+  @override
   void initState() {
     super.initState();
     futurePost = apiService.getDetailsPost(widget.id);
@@ -96,7 +97,6 @@ class _DetailsPageState extends State<DetailsPage> {
                         //isSelected = !isSelected;
                         //detailsPost.isFound = newBool;
                         detailsPost.isFound = !detailsPost.isFound;
-                        print(detailsPost.isFound);
                       } catch (e) {
                         rethrow;
                       }

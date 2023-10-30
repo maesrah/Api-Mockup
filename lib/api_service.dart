@@ -42,7 +42,7 @@ class ApiService {
   Future<void> createPost(Post post) async {
     //post.toJson();
     var apiUrl = Uri.parse('$_baseUrl/posts');
-    var response = await http.post(
+    await http.post(
       apiUrl,
       headers: {"Content-Type": "application/json"},
       body: jsonEncode(

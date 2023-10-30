@@ -8,10 +8,10 @@ class TaskPreference extends StatefulWidget {
   const TaskPreference({Key? key}) : super(key: key);
 
   @override
-  _TaskPreferenceState createState() => _TaskPreferenceState();
+  TaskPreferenceState createState() => TaskPreferenceState();
 }
 
-class _TaskPreferenceState extends State<TaskPreference> {
+class TaskPreferenceState extends State<TaskPreference> {
   List<Task> _tasks = [];
   final _taskNameController = TextEditingController();
 
@@ -39,12 +39,19 @@ class _TaskPreferenceState extends State<TaskPreference> {
     final taskListJson =
         jsonEncode(_tasks.map((task) => task.toJson()).toList());
     prefs.setString('tasks', taskListJson);
+    print(taskListJson);
     setState(() {});
   }
 
   void createTask(String name) {
     final newTask = Task(name: name);
-    _tasks.add(newTask);
+    //_tasks.add(newTask);
+
+    final newTaskList = [
+      newTask,
+      ..._tasks,
+    ];
+    _tasks = newTaskList;
     _saveTask();
   }
 

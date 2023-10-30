@@ -19,7 +19,7 @@ class PostPageState extends State<PostPage> {
   TextEditingController lastSeenController = TextEditingController();
   TextEditingController imageController = TextEditingController();
   ApiService apiService = ApiService();
-  int _idCounter = 1;
+  final int _idCounter = 1;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
