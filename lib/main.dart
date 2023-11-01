@@ -1,6 +1,6 @@
 import 'package:apiproject/theme.dart';
 
-import 'package:apiproject/todos/task.preferences.dart';
+import 'package:apiproject/todos/task.controller.dart';
 
 import 'package:flutter/material.dart';
 
@@ -18,7 +18,7 @@ class MyApp extends StatelessWidget {
       theme: AppTheme.lightTheme,
       title: 'Flutter Demo',
       debugShowCheckedModeBanner: false,
-      home: const TaskPreference(),
+      home: const TaskController(),
     );
   }
 }

@@ -1,4 +1,4 @@
-import 'package:apiproject/todos/todo.controller.dart';
+import 'package:apiproject/todos/task.controller.dart';
 import 'package:flutter/material.dart';
 
 import 'package:apiproject/theme.dart';
@@ -17,7 +17,7 @@ class MyApp extends StatelessWidget {
       theme: AppTheme.lightTheme,
       title: 'Flutter Demo',
       debugShowCheckedModeBanner: false,
-      home: const TodoAppController(),
+      home: const TaskController(),
     );
   }
 }
