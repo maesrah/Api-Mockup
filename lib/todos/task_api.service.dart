@@ -68,9 +68,7 @@ class TaskApiService {
 
       return bodyTyped;
     } else {
-      // Handle non-200 status code, e.g., rate limit exceeded
-      print('Request failed with status: ${response.statusCode}');
-      return []; // You can return an empty list or handle the error in another way.
+      return [];
     }
   }
 
