@@ -20,7 +20,12 @@ class _TaskPageState extends State<TaskPage> {
   @override
   void initState() {
     super.initState();
-    Provider.of<TaskProvider>(context, listen: false).loadTasks();
+    try {
+      Provider.of<TaskProvider>(context, listen: false).loadTasks();
+    } catch (e) {
+      ScaffoldMessenger.of(context)
+          .showSnackBar(SnackBar(content: Text(e.toString())));
+    }
   }
 
   @override
