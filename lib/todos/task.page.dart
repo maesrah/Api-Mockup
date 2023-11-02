@@ -4,8 +4,6 @@ import 'package:apiproject/todos/task_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-typedef TaskOperationCallback = Future<void> Function(String);
-
 class TaskPage extends StatefulWidget {
   const TaskPage({
     Key? key,
