@@ -1,11 +1,18 @@
 import 'package:apiproject/theme.dart';
-
 import 'package:apiproject/todos/task.controller.dart';
+import 'package:apiproject/todos/task_provider.dart';
+import 'package:apiproject/todos/trypage.dart';
 
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 void main() {
-  runApp(const MyApp());
+  runApp(
+    ChangeNotifierProvider(
+      create: (context) => TaskProvider(),
+      child: const MyApp(),
+    ),
+  );
 }
 
 class MyApp extends StatelessWidget {
@@ -18,7 +25,7 @@ class MyApp extends StatelessWidget {
       theme: AppTheme.lightTheme,
       title: 'Flutter Demo',
       debugShowCheckedModeBanner: false,
-      home: const TaskController(),
+      home: const TryAppPage(),
     );
   }
 }

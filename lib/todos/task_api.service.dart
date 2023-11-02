@@ -58,15 +58,20 @@ class TaskApiService {
     await Future.delayed(const Duration(seconds: 2));
 
     var url = Uri.parse('$_baseUrl/tasks');
-    // final response =
-    //     await http.get(url, headers: {"Content-Type": "application/json"});
     final response = await http.get(url);
-    final List body = json.decode(response.body);
-    final bodyTyped = body.map((e) => Task.fromJson(e)).toList();
 
-    bodyTyped.sort((a, b) => int.parse(b.id) - int.parse(a.id));
+    if (response.statusCode == 200) {
+      final List body = json.decode(response.body);
+      final bodyTyped = body.map((e) => Task.fromJson(e)).toList();
 
-    return bodyTyped;
+      bodyTyped.sort((a, b) => int.parse(b.id) - int.parse(a.id));
+
+      return bodyTyped;
+    } else {
+      // Handle non-200 status code, e.g., rate limit exceeded
+      print('Request failed with status: ${response.statusCode}');
+      return []; // You can return an empty list or handle the error in another way.
+    }
   }
 
   Future<Task> getDetailsTask(String id) async {

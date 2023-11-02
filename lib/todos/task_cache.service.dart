@@ -10,7 +10,7 @@ class TaskCacheService {
   Future<void> saveTasks(List<Task> tasks) async {
     final prefs = await SharedPreferences.getInstance();
 
-    List<String> taskListString =
+    List<String>? taskListString =
         tasks.map((task) => jsonEncode(task.toJson())).toList();
 
     prefs.setStringList(_taskKey, taskListString);
