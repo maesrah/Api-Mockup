@@ -13,7 +13,7 @@ class TaskProvider extends ChangeNotifier {
   final taskAPIService = TaskApiService();
   UnmodifiableListView<Task> get tasks => UnmodifiableListView(taskList);
 
-  void loadTasks() async {
+  Future<void> loadTasks() async {
     final tasksFromStorage = await taskCacheService.loadTasks();
     taskList = tasksFromStorage;
     final tasksFromNetwork = await taskAPIService.getTasks();
@@ -24,7 +24,7 @@ class TaskProvider extends ChangeNotifier {
     taskCacheService.saveTasks(tasksFromNetwork);
   }
 
-  void createTask(String name) async {
+  Future<void> createTask(String name) async {
     try {
       isLoading = true;
       notifyListeners();
@@ -48,7 +48,7 @@ class TaskProvider extends ChangeNotifier {
     }
   }
 
-  void deleteTask(String id) async {
+  Future<void> deleteTask(String id) async {
     try {
       isLoading = true;
       notifyListeners();
@@ -66,7 +66,7 @@ class TaskProvider extends ChangeNotifier {
     taskCacheService.saveTasks(taskList);
   }
 
-  void updateTask(String id) async {
+  Future<void> updateTask(String id) async {
     try {
       isLoading = true;
       Task? updatedTask;

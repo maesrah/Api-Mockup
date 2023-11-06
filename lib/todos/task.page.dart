@@ -64,20 +64,22 @@ class _TaskPageState extends State<TaskPage> {
                           child: Text(
                             'Mark ${(task.isDone ? 'Undone' : 'Done')}',
                           ),
-                          onPressed: () {
+                          onPressed: () async {
                             try {
-                              taskProvider.updateTask(task.id);
+                              await taskProvider.updateTask(task.id);
                             } catch (e) {
+                              if (!context.mounted) return;
                               ScaffoldMessenger.of(context).showSnackBar(
                                   SnackBar(content: Text(e.toString())));
                             }
                           }),
                       IconButton(
                           icon: const Icon(Icons.delete),
-                          onPressed: () {
+                          onPressed: () async {
                             try {
-                              taskProvider.deleteTask(task.id);
+                              await taskProvider.deleteTask(task.id);
                             } catch (e) {
+                              if (!context.mounted) return;
                               ScaffoldMessenger.of(context).showSnackBar(
                                   SnackBar(content: Text(e.toString())));
                             }
@@ -101,11 +103,12 @@ class _TaskPageState extends State<TaskPage> {
                     child: const Text('Cancel'),
                   ),
                   ElevatedButton(
-                    onPressed: () {
+                    onPressed: () async {
                       try {
-                        taskProvider
+                        await taskProvider
                             .createTask(taskProvider.taskNameController.text);
                       } catch (e) {
+                        if (!context.mounted) return;
                         ScaffoldMessenger.of(context).showSnackBar(
                             SnackBar(content: Text(e.toString())));
                       }
